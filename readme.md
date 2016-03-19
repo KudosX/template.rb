@@ -11,7 +11,7 @@ Template installs gems and runs commands to add/delete files and add/insert cont
 * appends README.md <br>
 * creates new .gitignore with all possible ignore files/extensions <br>
 * removes test directory <br>
-* removes application.css and adds custom.css.scss with bootstrap scss defaults <br>
+* removes application.css and adds application.css.scss with bootstrap scss defaults <br>
 * replaces application.js file prefilled out <br>
 * replaces application_helper.rb with title script <br>
 * replaces application.html.erb with stock scripts and renders <br>
