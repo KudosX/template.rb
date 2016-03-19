@@ -577,8 +577,9 @@ run "rails generate rspec:install"
 
 # Initializes
 # ==================================================
-# puts 'create and migrate pgsql database'
-# run "rake db:create db:migrate"
+ puts 'create and migrate pgsql database'
+ run "rake db:create db:migrate"
+
 # puts 'create fake database using seeds.rb'
 # run "rake db:seed"
 
@@ -587,11 +588,41 @@ puts 'Initialize guard'
 run "bundle exec guard init"
 
 
-# Simple Controller
+# Simple Controller and add provide in view pages
 #===================================================
 
 puts 'Simple Controller with actions Index, About, FAQ, Contact'
 run 'rails g controller static_pages index about faq contact'
+
+prepend_file 'app/views/static_pages/index.html.erb', <<-CODE
+<% provide(:title, 'Home') %>
+CODE
+
+prepend_file 'app/views/static_pages/about.html.erb', <<-CODE
+<% provide(:title, 'About') %>
+CODE
+
+prepend_file 'app/views/static_pages/contact.html.erb', <<-CODE
+<% provide(:title, 'Contact') %>
+CODE
+
+prepend_file 'app/views/static_pages/faq.html.erb', <<-CODE
+<% provide(:title, 'FAQ') %>
+CODE
+
+remove_file 'config/routes.rb'
+create_file 'config/routes.rb', <<-CODE
+Rails.application.routes.draw do
+  root 'static_pages#index'
+
+  get 'static_pages/about'
+
+  get 'static_pages/faq'
+
+  get 'static_pages/contact'
+
+end
+CODE
 
 # Git: Initialize
 # ==================================================

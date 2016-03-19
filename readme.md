@@ -2,8 +2,6 @@
 
 *invoking template:* rails new myapp -m template.rb --database=postgresql<br>
 
-NOTE: after running template - change config/routes.rb to: root 'static_pages#index'
-
 Template installs gems and runs commands to add/delete files and add/insert content to other files<br>
 
 **Pages modified:**<br>
@@ -19,6 +17,9 @@ Template installs gems and runs commands to add/delete files and add/insert cont
 * creates _header.html.erb file <br>
 * creates _footer.html.erb file <br>
 * creates new gemfile with preloaded gems <br>
+* prepends code at beginning of view pages after controller script is run <br>
+* removes and creates routes.rb file after controller script is run <br>
+
 
 **Run commands to:** <br>
 * install capistrano <br>
@@ -29,3 +30,4 @@ Template installs gems and runs commands to add/delete files and add/insert cont
 * initialize guard <br>
 * initialize git <br>
 * rails g controller static_pages index about faq contact <br>
+
