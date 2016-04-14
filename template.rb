@@ -25,6 +25,13 @@ file 'README.md', <<-CODE
 rake db:create
 rake db:migrate
 ```
+* if you have problems making therubyracer gem work in mac try this:
+```
+brew install v8-315
+bundle config --local build.libv8 --with-system-v8
+bundle config --local build.therubyracer --with-v8-dir=/usr/local/opt/v8-315
+bundle install
+```
 * more stuff here
 * and even more stuff here
 CODE
@@ -499,6 +506,7 @@ add_source 'https://rubygems.org'
 # gem 'omniauth-twitter'
 # gem 'omniauth-linkedin'
 # gem 'omniauth-pinterest'
+# gem 'omniauth-instagram'
   gem 'devise', :github => 'plataformatec/devise', :branch => 'master'
 # gem 'devise'
 # gem 'pundit'
