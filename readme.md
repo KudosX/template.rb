@@ -1,4 +1,4 @@
-# Rails Template File with Bootstrap and Postgresql for Rails 5.0.0.beta3:
+# Rails Template File with Bootstrap and Postgresql for Rails 5.0.0.rc1:
 
 *invoking template:* rails new myapp -m template.rb --database=postgresql<br>
 
