@@ -350,6 +350,7 @@ remove_file 'app/assets/javascripts/application.js'
 file 'app/assets/javascripts/application.js', <<-CODE
     //= require jquery
     //= require jquery_ujs
+    //= require turbolinks
     //= require bootstrap-sprockets
     //= require_tree .
 CODE
@@ -378,8 +379,8 @@ file 'app/views/layouts/application.html.erb', <<-CODE
     <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <meta name=“viewport” content=“width=device-width, initial-scale=1, maximum-scale=1”>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= render 'layouts/shim' %>
   </head>
   <body>
@@ -414,6 +415,30 @@ file 'app/views/layouts/_header.html.erb', <<-CODE
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <%= link_to "sample app", root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-left">
+      <% unless user_signed_in? %>
+          <li class="<%= "active" if current_page?("/users/sign_up") %>">
+            <%= link_to "Sign up", new_user_registration_path %>
+          </li>
+          <li class="<%= "active" if current_page?("/users/sign_in") %>">
+            <%= link_to "Sign in", new_user_session_path %>
+          </li>
+      <% end %>
+      <% if user_signed_in? %>
+          <div class="navbar-left">
+            <p class="navbar-text">
+              Signed in as <%= current_user.email %>
+            </p>
+            <ul class="nav navbar-nav navbar-left">
+              <li><%= link_to "Sign out", destroy_user_session_path,
+                              method: :delete %>
+              </li>
+            </ul>
+          </div>
+      <% end %>
+      </ul>
+    </nav>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Home", root_path %></li>
@@ -478,6 +503,7 @@ add_source 'https://rubygems.org'
 
   gem 'rails', '>= 5.0.0.rc1'
 #  gem 'rails', '4.2.5'
+#  gem 'sqlite3'
   gem 'pg'
   gem 'puma', '~> 3.0'
 # Segment.io as an analytics solution (https://github.com/segmentio/analytics-ruby)
@@ -505,12 +531,12 @@ add_source 'https://rubygems.org'
   gem 'omniauth'
   gem 'therubyracer'
   gem 'omniauth-facebook'
-  gem 'omniauth-twitter'
-  gem 'omniauth-linkedin'
+# gem 'omniauth-twitter'
+# gem 'omniauth-linkedin'
 # gem 'omniauth-pinterest'
   gem 'omniauth-instagram'
 # gem 'devise', :github => 'plataformatec/devise', :branch => 'master'
-# gem 'devise'
+  gem 'devise'
 # gem 'pundit'
 # gem 'active_model_serializers'
 # gem 'carrierwave'
@@ -519,7 +545,7 @@ add_source 'https://rubygems.org'
 # for static pages like “about”
 # gem 'high_voltage'
 # suppresses distracting messages in log files
-# gem 'quiet_assets'
+  gem 'quiet_assets'
 # gem 'twilio-ruby'
 
 
@@ -550,13 +576,13 @@ gem_group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   # adds next, step, finish, continue commands to pry, callstack navigation; up, down, frame
-  gem 'pry-byebug'
+#  gem 'pry-byebug'
   # replaces IRB
-  gem 'pry-rails'
+#  gem 'pry-rails'
   # adds color themes to pry
-  gem 'pry-theme'
+#  gem 'pry-theme'
   # see values of the instance and local variables in a pry session
-  gem 'pry-state'
+#  gem 'pry-state'
   # helps with error messages
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -577,6 +603,7 @@ end
 # Production Gems:
 
 gem_group :production do
+
   # For deployment to Heroku
   gem 'rails_12factor'
   # Ruby cloud services library for AWS for EC2, S3, etc.
